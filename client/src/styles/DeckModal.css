@@ -17,8 +17,21 @@
   background-color: #222;
   border-radius: 15px;
   width: 80%;
-  max-width: 900px;
+  max-width: 1200px;
   max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Add Cards View Modal */
+.add-cards-modal {
+  background-color: #222;
+  border-radius: 15px;
+  width: 95%;
+  max-width: 2000px;
+  max-height: 90vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -114,13 +127,14 @@
 }
 
 /* Decks container */
-.decks-container {
+.modal-decks-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
   padding: 20px;
   overflow-y: auto;
   max-height: 60vh;
+  
 }
 
 /* Individual deck card */

@@ -178,7 +178,7 @@ const Friends = () => {
                         <Link to={`/users/${userData.id}/dashboard`}>Dashboard</Link>
                         <Link to={`/users/${userData.id}/inventory`}>Inventory</Link>
                         <Link to={`/users/${userData.id}/marketplace`}>Marketplace</Link>
-                        <Link to={`/users/${userData.id}/arena`}>Arena</Link>
+                        <Link to={`/users/${userData.id}/arena`} state={{ user: userData }}>Arena</Link>
                         <Link to={`/users/${userData.id}/friends`} className="active">Friends</Link>
                     </div>
 

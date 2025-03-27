@@ -6,7 +6,8 @@ function GameMessage({ message, showIntroModal, showTutorialModal, showDeckSelec
         showDrawHandModal || showCoinTossModal || showForfeitConfirmModal || showNewRoundModal || 
         showGameOverModal || showGuardBlockModal || showRetainCardModal || showBattleResults;
 
-    if (!message || isAnyModalActive) {
+    // Only show message if it's the hand modal and we have a message
+    if (!message || !showDrawHandModal) {
         return null;
     }
 

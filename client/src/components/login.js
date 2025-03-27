@@ -7,7 +7,7 @@ function Login() {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [loginData, setLoginData] = useState({
-    email: '',
+    username: '',
     password: ''
   });
   
@@ -65,20 +65,34 @@ function Login() {
     console.log('Attempting login with:', loginData);
     
     try {
+      const requestData = {
+        username: loginData.username,
+        password: loginData.password
+      };
+      
+      console.log('Sending request to:', 'http://localhost:5555/auth/login');
+      console.log('Request headers:', {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      });
+      console.log('Request body:', JSON.stringify(requestData));
+      
       const response = await fetch('http://localhost:5555/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify(loginData),
+        body: JSON.stringify(requestData),
       });
       
       console.log('Login response status:', response.status);
+      console.log('Login response headers:', Object.fromEntries(response.headers.entries()));
+      
+      const responseText = await response.text();
+      console.log('Login response text:', responseText);
       
       if (response.ok) {
-        const responseText = await response.text();
-        console.log('Login response text:', responseText);
-        
         let user;
         try {
           user = JSON.parse(responseText);
@@ -93,17 +107,15 @@ function Login() {
         localStorage.setItem('user', JSON.stringify(user));
         navigate(`/users/${user.id}/dashboard`, {state: { user: user }});
       } else {
-        const errorText = await response.text();
-        console.error("Error response text:", errorText);
-        
         let errorData;
         try {
-          errorData = JSON.parse(errorText);
+          errorData = JSON.parse(responseText);
+          console.error("Parsed error data:", errorData);
         } catch (e) {
-          errorData = { error: errorText || 'Unknown error occurred' };
+          errorData = { error: responseText || 'Unknown error occurred' };
+          console.error("Error parsing error response:", e);
         }
         
-        console.error("Parsed error data:", errorData);
         setErrors({ login: errorData.error || 'Login failed' });
       }
     } catch (error) {
@@ -144,6 +156,8 @@ function Login() {
         console.log("Signup successful, user data:", user);
         setUser(user);
         localStorage.setItem('user', JSON.stringify(user));
+        // Clear the hasSeenWelcomeGift flag for new users
+        localStorage.removeItem('hasSeenWelcomeGift');
         navigate(`/users/${user.id}/dashboard`, {state: { user: user }});
       } else {
         const errorText = await response.text();
@@ -191,12 +205,12 @@ function Login() {
           {errors.login && <div className="error">{errors.login}</div>}
           
           <div className="form-group">
-            <label htmlFor="login-email">Email</label>
+            <label htmlFor="login-username">Username</label>
             <input
-              type="email"
-              id="login-email"
-              name="email"
-              value={loginData.email}
+              type="text"
+              id="login-username"
+              name="username"
+              value={loginData.username}
               onChange={handleLoginChange}
               required
             />

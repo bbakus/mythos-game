@@ -32,7 +32,7 @@ function App() {
             <>
               <div className="background-container"></div>
               <div className="login-background">
-                <img src="https://preview.redd.it/im-just-in-awe-of-these-epic-fantasy-landscapes-v0-b6w2jk2n27w91.png?width=2304&format=png&auto=webp&s=811341863b534bf90d8e4b3423fcc1fbf0aa06a9"/>
+                <img src="/assets/images/misc/login-background.webp"/>
               </div>
               <Login />
             </>

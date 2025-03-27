@@ -77,11 +77,15 @@ function Inventory(){
                     <Link to={`/users/${userId}/inventory`} className="active" state={{ user: userData }}>Inventory</Link>
                     <Link to={`/users/${userId}/marketplace`} state={{ user: userData }}>Marketplace</Link>
                     <Link to={`/users/${userId}/arena`} state={{ user: userData }}>Arena</Link>
+                    <Link to={`/users/${userId}/friends`} state={{ user: userData }}>Friends</Link>
                 </div>
                 
                 <div className='inventory-header'>
                     <h2>Inventory</h2>
-                    <p>Wallet: {userData.wallet} gems</p>
+                    <div className="header-actions">
+                        <p>Wallet: {userData.wallet} gems</p>
+                        <button onClick={toggleDeckModal} className="create-deck-button">Create Deck</button>
+                    </div>
                 </div>
                 
                 <div className="user-info">

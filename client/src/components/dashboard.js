@@ -19,6 +19,11 @@ function Dashboard(){
             try {
                 const parsedUser = JSON.parse(storedUser);
                 setUserData(parsedUser);
+                // Check if this is a new user (wallet = 100) and they haven't seen the welcome gift
+                const hasSeenWelcomeGift = localStorage.getItem('hasSeenWelcomeGift');
+                if (parsedUser.wallet === 100 && !hasSeenWelcomeGift) {
+                    setShowWelcomeGift(true);
+                }
             } catch (error) {
                 console.error("Error parsing user from localStorage:", error);
             }
@@ -31,8 +36,9 @@ function Dashboard(){
                     setUserData(data);
                     localStorage.setItem('user', JSON.stringify(data));
                     
-                    // Only show welcome gift for new users (wallet = 100)
-                    if (data.wallet === 100) {
+                    // Check if this is a new user (wallet = 100) and they haven't seen the welcome gift
+                    const hasSeenWelcomeGift = localStorage.getItem('hasSeenWelcomeGift');
+                    if (data.wallet === 100 && !hasSeenWelcomeGift) {
                         setShowWelcomeGift(true);
                     }
                 })
@@ -42,6 +48,8 @@ function Dashboard(){
 
     const handleCloseWelcomeGift = () => {
         setShowWelcomeGift(false);
+        // Mark that the user has seen the welcome gift
+        localStorage.setItem('hasSeenWelcomeGift', 'true');
     };
 
     const handleBuy = () => {

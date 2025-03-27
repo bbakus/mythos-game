@@ -325,7 +325,7 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
                         </div>
                     </div>
                     
-                    <div className="decks-container">
+                    <div className="modal-decks-container">
                         {decks.map(deck => (
                             <div key={deck.id} className="deck-card">
                                 <button
@@ -413,35 +413,27 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
                                 This deck is empty. Add some cards!
                             </div>
                         ) : (
-                            groupedCards.map(({ card, count }) => (
-                                <div key={card.id} className="deck-card-item">
-                                    <div className="deck-card-info">
-                                        <img 
-                                            src={card.image || '/assets/images/card_backs/CARDBACK.png'} 
-                                            alt={card.name || 'Card'} 
-                                            className="deck-card-image"
-                                            onError={(e) => {
-                                                e.target.onerror = null;
-                                                e.target.src = '/assets/images/card_backs/CARDBACK.png';
-                                            }}
-                                        />
-                                        <div className="deck-card-details">
-                                            <div className="deck-card-name">{card.name || 'Unknown Card'}</div>
-                                            <div className="deck-card-stats">
-                                                <span className="power">Power: {card.power || 0}</span>
-                                                <span className="cost">Cost: {card.cost || 0}</span>
-                                                <span className="count">Copies: {count}</span>
+                            <div className="deck-cards-grid">
+                                {groupedCards.map(({ card, count }) => (
+                                    <div key={card.id} className="deck-card-item">
+                                        <div className="deck-card-info">
+                                            <img 
+                                                src={card.image || '/assets/images/card_backs/CARDBACK.png'} 
+                                                alt={card.name || 'Card'} 
+                                                className="deck-card-image"
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = '/assets/images/card_backs/CARDBACK.png';
+                                                }}
+                                            />
+                                            <div className="deck-card-details">
+                                                <div className="deck-card-name">{card.name || 'Unknown Card'}</div>
+                                                <div className="deck-card-count">Copies: {count}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <button 
-                                        className="remove-card-btn"
-                                        onClick={() => handleRemoveCard(card.id)}
-                                    >
-                                        Remove
-                                    </button>
-                                </div>
-                            ))
+                                ))}
+                            </div>
                         )}
                     </div>
                     
@@ -483,7 +475,7 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
         
         return (
             <div className="deck-modal-overlay" onClick={onClose}>
-                <div className="deck-modal" onClick={e => e.stopPropagation()}>
+                <div className="add-cards-modal" onClick={e => e.stopPropagation()}>
                     <div className="deck-modal-header">
                         <h2>Select Cards to Add</h2>
                         <div className="header-buttons">
@@ -526,14 +518,10 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
                                                 />
                                                 <div className="inventory-card-details">
                                                     <div className="inventory-card-name">{item.card.name || 'Unknown Card'}</div>
-                                                    <div className="inventory-card-stats">
-                                                        <span className="power">Power: {item.card.power || 0}</span>
-                                                        <span className="cost">Cost: {item.card.cost || 0}</span>
-                                                        <span className="quantity">In inventory: {item.quantity}</span>
-                                                        {cardCount > 0 && (
-                                                            <span className="in-deck">In deck: {cardCount}</span>
-                                                        )}
-                                                    </div>
+                                                    <div className="inventory-card-quantity">In inventory: {item.quantity}</div>
+                                                    {cardCount > 0 && (
+                                                        <div className="inventory-card-in-deck">In deck: {cardCount}</div>
+                                                    )}
                                                 </div>
                                             </div>
                                             <button 

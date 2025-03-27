@@ -192,7 +192,7 @@ body {
   align-items: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   position: relative;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
 }
 
 .card-container:hover {
@@ -213,20 +213,27 @@ body {
   margin-top: 10px;
   background: none;
   padding: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
 }
 
-.card-name {
+.card-details .card-name {
   color: #fff;
+  font-family: 'RomanAntique', serif;
   font-size: 2rem;
   margin-bottom: 10px;
-  font-family: Helvetica, Arial, sans-serif;
+  text-align: center;
+  word-wrap: break-word;
+  max-width: 100%;
+  display: block;
+  font-weight: normal;
 }
 
 .price {
   color: #f9d671;
-  font-size: 1.1rem;
-  font-weight: bold;
+  font-size: 1.3rem;
+  
+  margin-bottom: 30px;
+  margin-top: 10px;
   font-family: Helvetica, Arial, sans-serif;
 }
 

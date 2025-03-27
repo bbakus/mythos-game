@@ -442,6 +442,7 @@ function Marketplace(){
                     <Link to={`/users/${userId}/inventory`} state={{ user }}>Inventory</Link>
                     <Link to={`/users/${userId}/marketplace`} state={{ user }} className="active">Marketplace</Link>
                     <Link to={`/users/${userId}/arena`} state={{ user }}>Arena</Link>
+                    <Link to={`/users/${userId}/friends`} state={{ user }}>Friends</Link>
                 </div>
                 
                 <div className="user-info">
@@ -501,7 +502,7 @@ function Marketplace(){
                             <img src={card.image} alt={card.name} />
                             <div className="card-details">
                                 <div className="card-name">{card.name}</div>
-                                <div className="price">Price: {cardPrices[card.id] || 10} GEMS</div>
+                                <div className="price">Price: {cardPrices[card.id] || 10} gems</div>
                             </div>
                             <button 
                                 className="buy-button"

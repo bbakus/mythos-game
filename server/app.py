@@ -29,9 +29,10 @@ CORS(app,
      resources={r"/*": {
          "origins": ["http://localhost:3000"],
          "supports_credentials": True,
-         "allow_headers": ["Content-Type", "Authorization"],
+         "allow_headers": ["Content-Type", "Authorization", "Accept"],
          "methods": ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
-         "expose_headers": ["Content-Type", "Authorization"]
+         "expose_headers": ["Content-Type", "Authorization"],
+         "max_age": 3600
      }})
 
 api = Api(app)
@@ -483,26 +484,38 @@ class Login(Resource):
     def post(self):
         try:
             print("\n=== Login Attempt ===")
-            data = request.get_json()
-            print("Login data:", data)
+            print("Request headers:", dict(request.headers))
+            print("Request data:", request.get_data())
+            print("Request content type:", request.content_type)
             
-            if not data or not data.get('email') or not data.get('password'):
-                print("Missing email or password")
-                return {'error': 'Email and password are required'}, 400
+            data = request.get_json()
+            print("Parsed JSON data:", data)
+            
+            if not data:
+                print("No data received")
+                return {'error': 'No data received'}, 400
                 
-            user = User.query.filter_by(email=data['email']).first()
+            if not data.get('username'):
+                print("Missing username")
+                return {'error': 'Username is required'}, 400
+                
+            if not data.get('password'):
+                print("Missing password")
+                return {'error': 'Password is required'}, 400
+                
+            user = User.query.filter_by(username=data['username']).first()
             print(f"User found: {user.username if user else 'None'}")
             
             if not user:
                 print("User not found")
-                return {'error': 'Invalid email or password'}, 401
+                return {'error': 'Invalid username or password'}, 401
             
             print(f"Attempting to authenticate with password: {data['password']}")
             print(f"Stored password hash: {user._password_hash}")
             
             if not user.authenticate(data['password']):
                 print("Invalid password")
-                return {'error': 'Invalid email or password'}, 401
+                return {'error': 'Invalid username or password'}, 401
                 
             session['user_id'] = user.id
             print(f"Session created with user_id: {user.id}")
