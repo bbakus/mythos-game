@@ -1,0 +1,229 @@
+.game-over-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.game-over-modal {
+    background: linear-gradient(135deg, #1a1c2c 0%, #2a2c3c 100%);
+    background-image: url('../../public/assets/images/misc/background-surface.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    padding: 40px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    animation: slideIn 0.5s ease-out;
+}
+
+.game-over-modal.victory {
+    border: 3px solid #4CAF50;
+}
+
+.game-over-modal.defeat {
+    border: 3px solid #f44336;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.result-title {
+    font-size: 5em;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.victory .result-title {
+    color: #a044ff;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    animation: victoryPulse 2s infinite;
+}
+
+.defeat .result-title {
+    color: #f44336;
+    animation: defeatPulse 2s infinite;
+}
+
+.result-subtitle {
+    font-size: 2em;
+    margin-top: 15px;
+    color: #bbb;
+}
+
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.stats-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.stats-section h3 {
+    color: #ddd;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-align: center;
+}
+
+.stats-section p {
+    font-size: 1.8em;
+    margin: 10px 0;
+    color: #fff;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.play-again-btn {
+    background: linear-gradient(135deg, #6a3093, #a044ff);
+    color: #f8d8a8;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    min-width: 120px;
+    font-family: 'RomanAntique', 'Times New Roman', serif;
+}
+
+.play-again-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 15px rgba(160, 68, 255, 0.5);
+}
+
+.dashboard-btn {
+    background: linear-gradient(135deg, #3e3e3e, #222222);
+    color: #f8d8a8;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    min-width: 120px;
+    font-family: 'RomanAntique', 'Times New Roman', serif;
+}
+
+.dashboard-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes victoryPulse {
+    0% { text-shadow: 0 0 15px rgba(0, 0, 0, 0.8); }
+    50% { text-shadow: 0 0 30px rgba(0, 0, 0, 0.9); }
+    100% { text-shadow: 0 0 15px rgba(0, 0, 0, 0.8); }
+}
+
+@keyframes defeatPulse {
+    0% { text-shadow: 0 0 10px rgba(244, 67, 54, 0.5); }
+    50% { text-shadow: 0 0 30px rgba(244, 67, 54, 0.8); }
+    100% { text-shadow: 0 0 10px rgba(244, 67, 54, 0.5); }
+}
+
+/* Scrollbar styling */
+.game-over-modal::-webkit-scrollbar {
+    width: 10px;
+}
+
+.game-over-modal::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.game-over-modal::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.game-over-modal::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .game-over-modal {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .result-title {
+        font-size: 3.5em;
+    }
+
+    .result-subtitle {
+        font-size: 1.5em;
+    }
+
+    .stats-section h3 {
+        font-size: 1.6em;
+    }
+
+    .stats-section p {
+        font-size: 1.4em;
+    }
+
+    .play-again-btn, .dashboard-btn {
+        font-size: 1.2em;
+        padding: 12px 24px;
+    }
+} 
