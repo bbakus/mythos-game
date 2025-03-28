@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: mythos-game-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mythos_game_db
+          property: connectionString
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+
+  - type: web
+    name: mythos-game-frontend
+    env: static
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://mythos-game-backend.onrender.com
+
+databases:
+  - name: mythos_game_db
+    databaseName: mythos_game
+    user: mythos_game 

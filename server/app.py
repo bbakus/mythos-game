@@ -27,7 +27,7 @@ migrate = Migrate(app, db)
 # Configure CORS
 CORS(app, 
      resources={r"/*": {
-         "origins": ["http://localhost:3000"],
+         "origins": ["http://localhost:3000", "https://mythos-game-frontend.onrender.com"],
          "supports_credentials": True,
          "allow_headers": ["Content-Type", "Authorization", "Accept"],
          "methods": ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
