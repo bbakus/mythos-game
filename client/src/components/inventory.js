@@ -19,14 +19,17 @@ function Inventory(){
     
     useEffect(() => {
         // Fetch inventory
-        fetch(`/users/${userId}/inventory`)
+        fetch(`http://localhost:5555/users/${userId}/inventory`)
             .then(res => {
+                console.log('Inventory fetch response status:', res.status);
                 if (!res.ok) {
-                    throw new Error('Failed to fetch inventory');
+                    console.error('Inventory response not OK:', res.status, res.statusText);
+                    throw new Error(`Failed to fetch inventory: ${res.status} ${res.statusText}`);
                 }
                 return res.json();
             })
             .then(data => {
+                console.log('Inventory data received:', data ? data.length : 0, 'items');
                 setInventory(data);
             })
             .catch(err => {
@@ -34,14 +37,17 @@ function Inventory(){
             });
             
         // Fetch user decks
-        fetch(`/users/${userId}/decks`)
+        fetch(`http://localhost:5555/users/${userId}/decks`)
             .then(res => {
+                console.log('Decks fetch response status:', res.status);
                 if (!res.ok) {
-                    throw new Error('Failed to fetch decks');
+                    console.error('Decks response not OK:', res.status, res.statusText);
+                    throw new Error(`Failed to fetch decks: ${res.status} ${res.statusText}`);
                 }
                 return res.json();
             })
             .then(data => {
+                console.log('Decks data received:', data ? data.length : 0, 'decks');
                 setDecks(data);
                 setLoading(false);
             })

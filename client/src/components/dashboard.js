@@ -129,7 +129,6 @@ function Dashboard(){
                 
                 <div className='user-header'>
                     <h2>Welcome {userData.username || 'User'}!</h2>
-                    <p>Wallet: {userData.wallet} gems</p>
                 </div>
                 
                 <div className="content-wrapper">

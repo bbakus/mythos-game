@@ -87,9 +87,17 @@ function Marketplace(){
     }, [userId, user.id]);
 
     useEffect(() => {
-        fetch('/cards')
-        .then(res => res.json())
+        fetch('http://localhost:5555/cards')
+        .then(res => {
+            console.log('Cards fetch response status:', res.status);
+            if (!res.ok) {
+                console.error('Response not OK:', res.status, res.statusText);
+                throw new Error(`Failed to fetch cards: ${res.status} ${res.statusText}`);
+            }
+            return res.json();
+        })
         .then(data => {
+            console.log('Cards data received:', data ? data.length : 0, 'cards');
             // Create a deep copy of the data array
             const dataCopy = JSON.parse(JSON.stringify(data));
             // Shuffle the cards
@@ -107,7 +115,10 @@ function Marketplace(){
                 guardBundle(data);
             }
         })
-        .catch(error => console.error('Error fetching cards:', error));
+        .catch(error => {
+            console.error('Error fetching cards:', error);
+            setError('Failed to load cards. Please try refreshing the page.');
+        });
     }, []);
 
     // Fisher-Yates shuffle algorithm
@@ -421,6 +432,29 @@ function Marketplace(){
         setSelectedCard(null);
     };
 
+    // Add debug function to test direct API calls
+    const testEndpoints = () => {
+        console.log("Testing direct API calls...");
+        
+        // Test /cards endpoint
+        fetch('/cards')
+            .then(res => {
+                console.log('Direct /cards fetch status:', res.status);
+                return res.ok ? res.json() : Promise.reject(`Status: ${res.status}`);
+            })
+            .then(data => console.log('Direct /cards response:', data ? `${data.length} cards` : 'No data'))
+            .catch(err => console.error('Direct /cards error:', err));
+            
+        // Test inventory endpoint
+        fetch(`/users/${userId}/inventory`)
+            .then(res => {
+                console.log('Direct inventory fetch status:', res.status);
+                return res.ok ? res.json() : Promise.reject(`Status: ${res.status}`);
+            })
+            .then(data => console.log('Direct inventory response:', data ? `${data.length} items` : 'No data'))
+            .catch(err => console.error('Direct inventory error:', err));
+    };
+
     return(
         <>
             <div className='marketplace-root'></div>
@@ -447,6 +481,12 @@ function Marketplace(){
                 
                 <div className="user-info">
                     <p>Wallet: {wallet} gems</p>
+                    <button 
+                        onClick={testEndpoints} 
+                        style={{marginLeft: '10px', background: '#444', padding: '5px 10px', borderRadius: '4px'}}
+                    >
+                        Test API
+                    </button>
                     {error && <p className="error-message">{error}</p>}
                 </div>
                 

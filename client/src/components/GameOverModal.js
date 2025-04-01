@@ -23,12 +23,6 @@ function GameOverModal({ show, result, onPlayAgain, onReturnToDashboard }) {
 
                 <div className="stats-container">
                     <div className="stats-section">
-                        <h3>Life Stats</h3>
-                        <p>Your final LP: {stats.finalLife}</p>
-                        <p>Enemy final LP: {stats.enemyFinalLife}</p>
-                    </div>
-
-                    <div className="stats-section">
                         <h3>Combat Statistics</h3>
                         <p>Highest damage turn: {stats.highestDamageDealt}</p>
                         <p>Total damage taken: {stats.totalDamageTaken}</p>

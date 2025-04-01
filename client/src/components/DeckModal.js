@@ -8,6 +8,7 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
     const [tempDeckName, setTempDeckName] = useState('');
     const [savingDeck, setSavingDeck] = useState(false);
     const [isAddingCard, setIsAddingCard] = useState(false);
+    const [previewCard, setPreviewCard] = useState(null);
     
     // Debug state changes
     useEffect(() => {
@@ -17,7 +18,7 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
     // Fetch the cards in the selected deck
     useEffect(() => {
         if (selectedDeck) {
-            fetch(`/users/${userId}/decks/${selectedDeck.id}/cards`)
+            fetch(`http://localhost:5555/users/${userId}/decks/${selectedDeck.id}/cards`)
                 .then(res => {
                     if (!res.ok) {
                         console.warn("Failed to fetch deck cards, will start with empty deck");
@@ -67,7 +68,7 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
 
     // Handle creating a new deck
     const handleCreateDeck = () => {
-        fetch(`/users/${userId}/decks`, {
+        fetch(`http://localhost:5555/users/${userId}/decks`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -311,6 +312,15 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
         });
     };
 
+    // Change to hover handlers
+    const handleCardHover = (card) => {
+        setPreviewCard(card);
+    };
+
+    const handleCardLeave = () => {
+        setPreviewCard(null);
+    };
+
     // Render based on current view
     if (view === 'decks') {
         return (
@@ -475,7 +485,7 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
         
         return (
             <div className="deck-modal-overlay" onClick={onClose}>
-                <div className="add-cards-modal" onClick={e => e.stopPropagation()}>
+                <div className={`add-cards-modal ${view === 'addCards' ? 'add-cards-modal' : ''}`} onClick={e => e.stopPropagation()}>
                     <div className="deck-modal-header">
                         <h2>Select Cards to Add</h2>
                         <div className="header-buttons">
@@ -505,12 +515,17 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
                                     const canAddMore = cardCount < item.quantity && !isDeckFull;
                                     
                                     return (
-                                        <div key={item.id} className="inventory-card-item">
+                                        <div 
+                                            key={item.id} 
+                                            className="inventory-card-item"
+                                        >
                                             <div className="inventory-card-info">
                                                 <img 
                                                     src={item.card.image || '/assets/images/card_backs/CARDBACK.png'} 
                                                     alt={item.card.name || 'Card'} 
                                                     className="inventory-card-image"
+                                                    onMouseEnter={() => handleCardHover(item.card)}
+                                                    onMouseLeave={handleCardLeave}
                                                     onError={(e) => {
                                                         e.target.onerror = null;
                                                         e.target.src = '/assets/images/card_backs/CARDBACK.png';
@@ -518,7 +533,7 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
                                                 />
                                                 <div className="inventory-card-details">
                                                     <div className="inventory-card-name">{item.card.name || 'Unknown Card'}</div>
-                                                    <div className="inventory-card-quantity">In inventory: {item.quantity}</div>
+                                                    <div className="inventory-card-quantity">Inventory: {item.quantity}</div>
                                                     {cardCount > 0 && (
                                                         <div className="inventory-card-in-deck">In deck: {cardCount}</div>
                                                     )}
@@ -526,7 +541,10 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
                                             </div>
                                             <button 
                                                 className="add-card-btn"
-                                                onClick={() => handleAddCard(item)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleAddCard(item);
+                                                }}
                                                 disabled={isAddingCard || !canAddMore}
                                             >
                                                 {isDeckFull 
@@ -602,6 +620,15 @@ function DeckModal({ onClose, userId, decks, setDecks, inventory }) {
                         </div>
                     </div>
                 </div>
+                
+                {/* Update preview modal */}
+                {previewCard && (
+                    <div className="card-preview-overlay">
+                        <div className="card-preview-modal">
+                            <img src={previewCard.image} alt={previewCard.name} />
+                        </div>
+                    </div>
+                )}
             </div>
         );
     }

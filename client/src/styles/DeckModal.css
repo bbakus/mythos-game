@@ -418,13 +418,14 @@
 }
 
 .inventory-card-item {
-  background-color: #333;
-  border-radius: 10px;
-  padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease;
 }
 
 .inventory-card-info {
@@ -434,16 +435,22 @@
 }
 
 .inventory-card-image {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 140px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-right: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.inventory-card-image:hover {
+  transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .inventory-card-details {
   flex: 1;
+  margin-left: 40px;
 }
 
 .inventory-card-name {
@@ -633,4 +640,32 @@
   0% { opacity: 0.8; }
   50% { opacity: 1; }
   100% { opacity: 0.8; }
+}
+
+/* Card Preview Modal */
+.card-preview-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2000;
+}
+
+.card-preview-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 45%;
+    max-height: 45vh;
+    pointer-events: none;
+}
+
+.card-preview-modal img {
+    max-width: 100%;
+    max-height: 45vh;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 } 
