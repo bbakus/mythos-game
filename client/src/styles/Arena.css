@@ -557,9 +557,14 @@
   background-repeat: no-repeat;
   border-radius: 15px;
   padding: 40px;
+<<<<<<< HEAD
   width: 90%;
   min-width: 800px;
   max-width: 1200px;
+=======
+  width: 80%;
+  max-width: fit-content;
+>>>>>>> 6b4313da6098a08c2a319fae1e7361525cb30573
   
   z-index: 100;
   text-align: center;
@@ -1039,10 +1044,16 @@
   transform: translate(-50%, -50%);
   background-color: rgba(20, 20, 20, 0.95);
   border-radius: 15px;
+<<<<<<< HEAD
   padding: 40px;
   width: 90%;
   min-width: 800px;
   max-width: 1200px;
+=======
+  padding: 30px;
+  width: 80%;
+  min-width: 800px;
+>>>>>>> 6b4313da6098a08c2a319fae1e7361525cb30573
   z-index: 100;
   text-align: center;
   color: #f8d8a8;

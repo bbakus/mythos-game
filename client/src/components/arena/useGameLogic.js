@@ -1043,6 +1043,7 @@ export function useGameLogic(userId, userData) {
                 }
             });
 
+<<<<<<< HEAD
             // Apply direct damage (attacks and thief)
             if (roundDamage > 0 || roundThiefDamage > 0) {
                 const totalDirectDamage = roundDamage + roundThiefDamage;
@@ -1057,6 +1058,16 @@ export function useGameLogic(userId, userData) {
                 // Player curse cards damage the opponent
                 setOpponentLife(prev => {
                     const newLife = Math.max(0, prev - playerCurseDamage);
+=======
+            if (roundDamage > 0 || roundThiefDamage > 0) {
+                setOpponentLife(prev => Math.max(0, prev - (roundDamage + roundThiefDamage)));
+                attackResults.push(`Total direct damage to opponent: ${roundDamage + roundThiefDamage}`);
+            }
+
+            if (roundCurseDamage > 0) {
+                setOpponentLife(prev => {
+                    const newLife = Math.max(0, prev - roundCurseDamage);
+>>>>>>> 6b4313da6098a08c2a319fae1e7361525cb30573
                     if (newLife <= 0) {
                         setBattleComplete(true);
                         setTimeout(() => {
@@ -1065,6 +1076,7 @@ export function useGameLogic(userId, userData) {
                     }
                     return newLife;
                 });
+<<<<<<< HEAD
             }
             
             // Apply enemy curse damage to player
@@ -1073,6 +1085,9 @@ export function useGameLogic(userId, userData) {
                 
                 // Enemy curse cards damage the player
                 setPlayerLife(prev => Math.max(0, prev - enemyCurseDamage));
+=======
+                attackResults.push(`Total curse damage to opponent: ${roundCurseDamage}`);
+>>>>>>> 6b4313da6098a08c2a319fae1e7361525cb30573
             }
 
             setDestroyedCards(newDestroyedCards);
@@ -1097,7 +1112,11 @@ export function useGameLogic(userId, userData) {
                 setGameStats(prev => {
                     const newStats = {
                         ...prev,
+<<<<<<< HEAD
                         highestDamageDealt: Math.max(prev.highestDamageDealt, roundDamage + roundThiefDamage + playerCurseDamage + enemyCurseDamage),
+=======
+                        highestDamageDealt: Math.max(prev.highestDamageDealt, roundDamage + roundThiefDamage + roundCurseDamage),
+>>>>>>> 6b4313da6098a08c2a319fae1e7361525cb30573
                         enemyCardsDestroyed: prev.enemyCardsDestroyed + cardsDestroyedThisRound,
                         thiefDamage: prev.thiefDamage + roundThiefDamage,
                         guardBlocks: prev.guardBlocks + roundGuardBlocks,
@@ -1105,7 +1124,11 @@ export function useGameLogic(userId, userData) {
                     };
 
                     // Update MVP for damage dealt
+<<<<<<< HEAD
                     if ((roundDamage + roundThiefDamage + playerCurseDamage + enemyCurseDamage) > 0 && (!prev.mvpCard || (roundDamage + roundThiefDamage + playerCurseDamage + enemyCurseDamage) > prev.mvpCard.value)) {
+=======
+                    if ((roundDamage + roundThiefDamage + roundCurseDamage) > 0 && (!prev.mvpCard || (roundDamage + roundThiefDamage + roundCurseDamage) > prev.mvpCard.value)) {
+>>>>>>> 6b4313da6098a08c2a319fae1e7361525cb30573
                         // Find the card that dealt the most damage
                         let mvpCard = null;
                         let maxDamage = 0;
@@ -1141,8 +1164,12 @@ export function useGameLogic(userId, userData) {
         let damageTaken = 0;
         let cardsLostThisRound = 0;
         let roundDamage = 0;
+<<<<<<< HEAD
         let playerCurseDamage = 0; // Damage FROM player curse cards TO enemy
         let enemyCurseDamage = 0; // Damage FROM enemy curse cards TO player
+=======
+        let roundCurseDamage = 0;
+>>>>>>> 6b4313da6098a08c2a319fae1e7361525cb30573
 
         // Guard cards can only attack empty lanes
         const activeOpponentCards = enemyLaneCards.map((card, index) => {
@@ -1277,7 +1304,11 @@ export function useGameLogic(userId, userData) {
                 const directDamage = damageTaken - playerCurseDamage;
                 const newPlayerLife = Math.max(0, playerLife - directDamage);
                 setPlayerLife(newPlayerLife);
+<<<<<<< HEAD
                 attackResults.push(`Total direct damage to ${userData.username}: ${directDamage}`);
+=======
+                attackResults.push(`Total direct damage to ${userData.username}: ${damageTaken}`);
+>>>>>>> 6b4313da6098a08c2a319fae1e7361525cb30573
                 
                 if (newPlayerLife <= 0) {
                     playerDefeated = true;
@@ -1334,7 +1365,11 @@ export function useGameLogic(userId, userData) {
                         totalDamageTaken: prev.totalDamageTaken + damageTaken,
                         cardsDestroyed: prev.cardsDestroyed + cardsLostThisRound,
                         guardBlocks: prev.guardBlocks + roundGuardBlocks,
+<<<<<<< HEAD
                         curseDamage: prev.curseDamage + playerCurseDamage + enemyCurseDamage
+=======
+                        curseDamage: prev.curseDamage + roundCurseDamage
+>>>>>>> 6b4313da6098a08c2a319fae1e7361525cb30573
                     };
 
                     // Update MVP for damage blocked
